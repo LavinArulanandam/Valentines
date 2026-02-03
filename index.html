@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Be My Valentine?</title>
+
+  <style>
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      min-height:100vh;
+      display:grid;
+      place-items:center;
+      background: linear-gradient(135deg,#ffd6e7,#fff0f6);
+      overflow:hidden;
+    }
+
+    .card{
+      background:white;
+      padding:32px 26px;
+      border-radius:26px;
+      box-shadow:0 20px 40px rgba(0,0,0,.15);
+      text-align:center;
+      max-width:420px;
+      width:90%;
+    }
+
+    h1{
+      font-size:34px;
+      margin-bottom:10px;
+    }
+
+    p{
+      margin-top:0;
+      opacity:.8;
+    }
+
+    .buttons{
+      display:flex;
+      justify-content:center;
+      gap:14px;
+      margin-top:20px;
+      position:relative;
+      min-height:60px;
+    }
+
+    button{
+      border:none;
+      padding:14px 20px;
+      font-size:16px;
+      font-weight:700;
+      border-radius:16px;
+      cursor:pointer;
+      box-shadow:0 10px 20px rgba(0,0,0,.12);
+    }
+
+    .yes{
+      background:#ff4d8d;
+      color:white;
+    }
+
+    .no{
+      background:#f3f3f3;
+      position:relative;
+    }
+
+    .success{
+      display:none;
+      margin-top:20px;
+    }
+
+    canvas{
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+    }
+  </style>
+</head>
+
+<body>
+
+<canvas id="confetti"></canvas>
+
+<div class="card">
+  <h1>Will you be my Valentine? 💘</h1>
+  <p>I planned something cute for us 😄</p>
+
+  <div class="buttons" id="buttons">
+    <button class="yes" id="yes">Yes 💖</button>
+    <button class="no" id="no">No 🙃</button>
+  </div>
+
+  <div class="success" id="success">
+    <h2>YAYYY 🥰</h2>
+    <p>It’s a date. I’ll send you the plan 👀</p>
+  </div>
+</div>
+
+<script>
+  const noBtn = document.getElementById("no");
+  const yesBtn = document.getElementById("yes");
+  const success = document.getElementById("success");
+  const buttons = document.getElementById("buttons");
+
+  noBtn.addEventListener("mouseenter", move);
+  noBtn.addEventListener("click", move);
+
+  function move(){
+    noBtn.style.position = "fixed";
+    noBtn.style.left = Math.random() * (window.innerWidth - 120) + "px";
+    noBtn.style.top = Math.random() * (window.innerHeight - 60) + "px";
+  }
+
+  yesBtn.addEventListener("click", () => {
+    buttons.style.display = "none";
+    success.style.display = "block";
+    confetti();
+  });
+
+  // Confetti
+  const canvas = document.getElementById("confetti");
+  const ctx = canvas.getContext("2d");
+  canvas.width = innerWidth;
+  canvas.height = innerHeight;
+
+  function confetti(){
+    let pieces = [];
+    for(let i=0;i<150;i++){
+      pieces.push({
+        x:Math.random()*canvas.width,
+        y:-20,
+        s:Math.random()*6+4,
+        v:Math.random()*3+2
+      });
+    }
+
+    function draw(){
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      pieces.forEach(p=>{
+        ctx.fillStyle="#ff4d8d";
+        ctx.fillRect(p.x,p.y,p.s,p.s);
+        p.y+=p.v;
+      });
+      pieces = pieces.filter(p=>p.y<canvas.height);
+      if(pieces.length) requestAnimationFrame(draw);
+    }
+    draw();
+  }
+</script>
+
+</body>
+</html>
