@@ -126,9 +126,13 @@ body{
 
   function move(){
     noBtn.style.position = "fixed";
-    noBtn.style.left = Math.random() * (window.innerWidth - 120) + "px";
-    noBtn.style.top = Math.random() * (window.innerHeight - 60) + "px";
-  }
+
+  const maxX = window.innerWidth - noBtn.offsetWidth;
+  const maxY = window.innerHeight - noBtn.offsetHeight;
+
+  noBtn.style.left = Math.random() * maxX + "px";
+  noBtn.style.top = Math.random() * maxY + "px";
+}
 
   yesBtn.addEventListener("click", () => {
     buttons.style.display = "none";
