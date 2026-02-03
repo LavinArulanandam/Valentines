@@ -127,21 +127,8 @@ body{
   function move(){
   
   noBtn.style.position = "fixed";
-  noBtn.style.transition = "left .18s ease, top .18s ease";
-
-  const rect = noBtn.getBoundingClientRect();
-
-  const vw = document.documentElement.clientWidth;
-  const vh = document.documentElement.clientHeight;
-
-  const maxX = vw - rect.width;
-  const maxY = vh - rect.height;
-
-  const x = Math.random() * maxX;
-  const y = Math.random() * maxY;
-
-  noBtn.style.left = `${x}px`;
-  noBtn.style.top = `${y}px`;
+    noBtn.style.left = Math.random() * (window.innerWidth - 120) + "px";
+    noBtn.style.top = Math.random() * (window.innerHeight - 60) + "px";
 }
 
   yesBtn.addEventListener("click", () => {
